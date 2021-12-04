@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StatusBar, useWindowDimensions} from 'react-native';
+import {View, Text, StatusBar, useWindowDimensions, TouchableOpacity} from 'react-native';
 import {viewStyles, textStyles} from './styles';
 import {Header, Contents, Footer} from './components/Layout';
 import ShadowBox from './components/ShadowBox';
