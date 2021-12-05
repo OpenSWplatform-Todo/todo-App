@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import IconButton from './IconButton';
 import {images} from '../images';
 import Modal from "./Modal";
+import Popup from "./Popup";
 
 const Container = styled.View`
     flex-direction: row;
@@ -45,6 +46,7 @@ const Task = ({text, date}) => {
                 <Date>{date}</Date>
             </InnerContainer>
             <ModalContainer>
+                <Popup />
                 <Modal />
             </ModalContainer>
         </Container>

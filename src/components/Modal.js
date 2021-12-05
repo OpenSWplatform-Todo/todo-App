@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
 import { Contents } from "./Layout";
 import IconButton from './IconButton';
 import {images} from '../images';
 import Iconimg from "./Iconimg";
-
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,6 +18,10 @@ const App = () => {
           setModalVisible(!modalVisible);
         }}
       >
+        <Pressable style={{
+          // flex:1,
+          backgroundColor: 'transparent',
+        }} onPress={()=>setModalVisible(false)}/>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {/* <Text style={styles.modalText}>Modal</Text> */}
@@ -58,7 +61,10 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-end",
+    // position:"absolute",
+    // top: 100,
+    // right: 0,
   },
   modalView: {
     margin: 0,
