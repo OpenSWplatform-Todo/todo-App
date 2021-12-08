@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity } from "react-native";
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableOpacity, TouchableWithoutFeedback  } from "react-native";
 import { Contents } from "./Layout";
 import IconButton from './IconButton';
 import {images} from '../images';
@@ -18,40 +18,33 @@ const App = () => {
           setModalVisible(!modalVisible);
         }}
       >
-        <Pressable style={{
-          // flex:1,
-          backgroundColor: 'transparent',
-        }} onPress={()=>setModalVisible(false)}/>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>Modal</Text> */}
-            {/* Edit, Delete, Share */}
-            <Pressable
-              style={[styles.button, styles.buttonFunction]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.btntextStyle}>Edit</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonFunction]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.btntextStyle}>Delete</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonFunction]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.btntextStyle}>Share</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.btntextStyle}>Close</Text>
-            </Pressable>
+        <TouchableWithoutFeedback
+          onPress={() => setModalVisible(!modalVisible)}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              {/* <Text style={styles.modalText}>Modal</Text> */}
+              {/* Edit, Delete, Share */}
+              <Pressable
+                style={[styles.button, styles.buttonFunction]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.btntextStyle}>Edit</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonFunction]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.btntextStyle}>Delete</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonFunction]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.btntextStyle}>Share</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
       <Pressable
         style={[styles.icon, styles.buttonOpen]}
@@ -66,14 +59,15 @@ const App = () => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "flex-end",
     // position:"absolute",
     // top: 100,
     // right: 0,
   },
   modalView: {
-    margin: 0,
+    position: "absolute",
+    top: 100,
     backgroundColor: "#E6E6E6",
     borderRadius: 10,
     padding: 20,

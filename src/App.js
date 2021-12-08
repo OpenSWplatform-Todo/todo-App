@@ -42,8 +42,9 @@ export default function App() {
                 backgroundColor={theme.background}
             />
             <List width={width}>
-                {/* <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/> */}
-                <Task text="Visit Library" date="2021/11/13   17:00"/>
+                <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/>
+                <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/>
+                {/* <Task text="Visit Library" date="2021/11/13   17:00"/> */}
             </List>
             <Button />
         </Container>

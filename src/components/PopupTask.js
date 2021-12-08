@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 import Modalbtn from "./Modal";
 import Popup from "./Popup";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TouchableWithoutFeedback } from "react-native";
 
 import IconButton from './IconButton';
 import {images} from '../images';
@@ -55,11 +55,8 @@ const Task = ({text, date}) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <Pressable style={{
-        //   flex: 1,
-          backgroundColor: 'transparent',
-        }} onPress={()=>setModalVisible(false)}/>
-
+        <TouchableWithoutFeedback
+          onPress={() => setModalVisible(!modalVisible)}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Title</Text>
@@ -78,21 +75,14 @@ const Task = ({text, date}) => {
             >
               <Text style={styles.btntextStyle}>Location</Text>
             </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.btntextStyle}>Close</Text>
-            </Pressable>
           </View>
         </View>
+        </TouchableWithoutFeedback>
       </Modal>
       <Pressable
         style={[styles.icon, styles.buttonOpen]}
         onPress={() => setModalVisible(true)}
       >
-        <Iconimg type={images.update}/>
-      </Pressable>
       <Container>
             <IconButton type={images.uncompleted}/>
             <InnerContainer>
@@ -100,10 +90,10 @@ const Task = ({text, date}) => {
                 <Date>{date}</Date>
             </InnerContainer>
             <ModalContainer>
-                <Popup />
                 <Modalbtn />
             </ModalContainer>
-        </Container>
+      </Container>
+      </Pressable>
     </View>
     );
 };
