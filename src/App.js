@@ -8,6 +8,7 @@ import {theme} from './theme';
 import Button from './components/Button';
 import Input from './components/Input';
 import Task from './components/Task';
+import PopupTask from './components/PopupTask';
 
 
 const Container = styled.SafeAreaView`
@@ -41,7 +42,7 @@ export default function App() {
                 backgroundColor={theme.background}
             />
             <List width={width}>
-                <Task text="Open SW Platform" date="2021/11/14   23:59"/>
+                {/* <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/> */}
                 <Task text="Visit Library" date="2021/11/13   17:00"/>
             </List>
             <Button />

@@ -44,6 +44,12 @@ const App = () => {
             >
               <Text style={styles.btntextStyle}>Share</Text>
             </Pressable>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.btntextStyle}>Close</Text>
+            </Pressable>
           </View>
         </View>
       </Modal>
@@ -90,6 +96,11 @@ const styles = StyleSheet.create({
   },
   buttonOpen: {
     backgroundColor: "#E6E6E6",
+  },
+  buttonClose: {
+    marginTop: 10,
+    borderRadius: 10,
+    backgroundColor: "#999999",
   },
   buttonFunction: {
       borderRadius: 0,
