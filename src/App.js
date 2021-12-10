@@ -11,8 +11,11 @@ import Button from './components/Button';
 import Input from './components/Input';
 import Task from './components/Task';
 import PopupTask from './components/PopupTask';
+
+import Addtodo from './screen/Addtodo';
 import Main from './screen/Main' 
 
+const Stack = createNativeStackNavigator();
 
 const Container = styled.SafeAreaView`
     flex: 1;
@@ -37,20 +40,22 @@ const List = styled.ScrollView`
 export default function App() {
     const width = useWindowDimensions().width;
     return (
-    <ThemeProvider theme={theme}>
-        <Header/>
-        <Container>
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={theme.background}
-            />
-            <List width={width}>
-                <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/>
-                <PopupTask text="Open SW Platform" date="2021/11/14   23:59"/>
-                {/* <Task text="Visit Library" date="2021/11/13   17:00"/> */}
-            </List>
-            <Button />
-        </Container>
-    </ThemeProvider>
+        <NavigationContainer> 
+            <Stack.Navigator initialRouteName="Main"> 
+                <Stack.Screen name="Main" component={Main} /> 
+                <Stack.Screen name="Addtodo" component={Addtodo} 
+                    options={{ 
+                        title: 'Create to-do item', 
+                        headerStyle: {
+                            backgroundColor: '#00462A',
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                            fontWeight: 'bold',
+                            },
+
+                    }}/> 
+            </Stack.Navigator> 
+        </NavigationContainer>
     );
 };
