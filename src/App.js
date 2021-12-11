@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createStackNavigator } from '@react-navigation/stack'; 
 
-import RandomScreen from './src/screens/Random'; 
-import RandomD from './src/screens/Random2'; 
+import RandomScreen from './screens/Random'; 
+import RandomD from './screens/Random2'; 
 
 const Stack = createStackNavigator(); 
 function App() { 
