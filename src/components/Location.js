@@ -1,17 +1,6 @@
-import React from 'react';
-import Styled from 'styled-components/native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
-const Container = Styled.View`
-    flex: 1;
-`;
+import React, { useState } from 'react';
+import {StyleSheet, TextInput} from 'react-native';
+import {textStyles} from '../styles/TodoListScreenStyles';
 
-const GoogleMap = () => {
-  return (
-    <Container>
-      <MapView style={{flex: 1}} provider={PROVIDER_GOOGLE} />
-    </Container>
-  );
-};
-
-export default GoogleMap;
+<Text style ={textStyles.heading}>Location</Text>

@@ -11,7 +11,7 @@ export const AddTask = ({value, onChangeText}) => {
         <TextInput style ={inputStyle.addTask}
             placeholder="Add Task here..."
             placeholderTextColor= {"#898989"}
-            maxLength={50}
+            maxLength={20}
             autoCapitalize= 'none'
             autoCorrect= {false}
             value = {value} onChangeText={onChangeText} 

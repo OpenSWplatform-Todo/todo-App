@@ -13,6 +13,7 @@ export const viewStyles = StyleSheet.create({
         justifyContent: 'flex-start', 
         flexDirection: "row",
     },
+
     button: {
         marginLeft: 8 ,
         backgroundColor: "#E8E8E8",
@@ -20,13 +21,6 @@ export const viewStyles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 3,
     },
-    wrapperCustom: {
-        margin: 10,
-      },
-      fixToText: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      },
 });
 
 export const textStyles = StyleSheet.create({
