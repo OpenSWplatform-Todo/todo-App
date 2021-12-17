@@ -182,8 +182,6 @@ function TodoList({navigation}) {
       <Filtering/>
       <DefaultTasks/>
       <AddFloatingButton
-        onPress={()=>navigation.navigate('AddTodoItemScreen')}
-      />
         title="+"
         onPress={()=>navigation.navigate('AddTodoItemScreen')}
       />
