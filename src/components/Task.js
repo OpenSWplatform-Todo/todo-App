@@ -93,7 +93,7 @@ export const Task = ({Edit, item, selected, onPress, onLongPress, deleteTask, to
                 style={[styles.icon, styles.buttonOpen]}
                 id = {item.id} onPress={onPress} onLongPress={onLongPress} onPress={() => {setModalVisible(true)}}
             >
-                <View style = {itemStyle.container}>
+              <View style = {itemStyle.container}>
                     <IconButton style = {[{flex: 1}]} type = {item.completed ? images.completed : images.uncompleted} 
                     id = {item.id} onPressOut={toggleTask}/>
                     <View style = {[itemStyle.contents, {flex: 5}]}>
@@ -117,7 +117,7 @@ export const Task = ({Edit, item, selected, onPress, onLongPress, deleteTask, to
                     >
                       <Image source={images.menu} style={IconStyle.icon}/>
                     </Pressable>
-                </View>
+              </View>
                 {selected && <View style={styles.overlay} />}
             </TouchableOpacity>
         </View>

@@ -9,6 +9,7 @@ import ViewShot from 'react-native-view-shot';
 import * as Sharing from "expo-sharing";
 import { theme } from '../theme';
 
+import SearchBar from '../components/SearchBar';
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
@@ -178,14 +179,15 @@ function TodoList({navigation}) {
       }
       
       return (
-        <Pressable onPress={deSelectItems}>
+          <Pressable onPress={deSelectItems}>
             <FlatList
-              data={Object.values(listview)}
-              renderItem={({ item }) => (
-                <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
-              )}
-              keyExtractor={(item, index) => index.toString()} />
-        </Pressable>
+                data={Object.values(listview)}
+                renderItem={({ item }) => (
+                  <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+                )}
+                keyExtractor={(item, index) => index.toString()} 
+            />
+          </Pressable>
     )}
     else {return(null)}
   }
@@ -195,7 +197,8 @@ function TodoList({navigation}) {
       <Button
         title="+"
         onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
-        <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
+      <Button 
+        color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
         <View style={viewStyles.fixToText}> 
           <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Select All</Text></Pressable>
@@ -209,9 +212,10 @@ function TodoList({navigation}) {
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
           <View style={{backgroundColor: 'white'}}>
           <Filtering/>
+          <SearchBar/>
           <DefaultTasks/>
           </View>
-      </ViewShot>
+        </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
       <ArchiveFloatingButton/>
     </View>
