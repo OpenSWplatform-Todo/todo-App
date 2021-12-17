@@ -60,7 +60,7 @@ export const Map = ({gotoMap}) => {
           onPress={gotoMap}
         >
           <Image source={images.mark} style={{height: 18, width: 18}}/>
-          <Text style = {textStyles.heading}>  Gallery</Text>
+          <Text style = {textStyles.heading}>  Map</Text>
         </Pressable>
       </View>
     </>

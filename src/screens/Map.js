@@ -5,10 +5,10 @@ import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from "react-native-maps";
 export default function Map({navigation, route}) {
 
     const [initialRegion, setInitialRegion] = useState({
-        latitude: 35.91395373474155,
-        longitude: 127.73829440215488,
-        latitudeDelta: 5,
-        longitudeDelta: 5,
+        latitude:  37.56646571416213,
+        longitude: 126.94838534971927,
+        latitudeDelta: 0.008,
+        longitudeDelta: 0.008,
       })
     const [mapWidth, setMapWidth] = useState('99%');
 
@@ -21,7 +21,10 @@ export default function Map({navigation, route}) {
            provider={PROVIDER_GOOGLE}
            showsUserLocation={true}
            showsMyLocationButton={true}
-        />
+        >
+          <MapView.Marker coordinate={{ latitude: 37.56646571416213, longitude: 126.94838534971927, }} />
+        </MapView>
+
       </>
     );
   }
