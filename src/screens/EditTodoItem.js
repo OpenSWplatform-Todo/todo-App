@@ -46,7 +46,6 @@ function Edit({route, navigation}){
     
     let currentTasks = Object.assign({}, tasks);
     const ID = itemId.itemId;
-    console.log(ID)
 
     useEffect(() => {
         const firstLoad = async () => {
@@ -144,7 +143,7 @@ const ExportButton = ({onPressout}) => {
             <Pressable 
                 style = {[{ backgroundColor: '#00462A' }, footer.pressable]}
                 onPressOut = {onPressout}>
-                <Text style = {footer.text}> submit </Text>
+                <Text style = {footer.text}> edit </Text>
             </Pressable>
         );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { theme } from '../theme';
 
-import AddFloatingButton from '../components/AddFloatingButton';
+import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 
 const Category = () => {
   return (

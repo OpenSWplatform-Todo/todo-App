@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Animated, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { viewStyles, buttonStyles } from '../styles/FloatingButtonStyles';
-import { theme } from '../theme';
+import { viewStyles, buttonStyles } from '../../styles/FloatingButtonStyles';
+import { theme } from '../../theme';
 
 export default class AddFloatingButton extends React.Component {
   render() {

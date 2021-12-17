@@ -4,6 +4,7 @@ import { viewStyles, textStyles, buttonStyles } from '../styles/RandomScreenStyl
 import q from '../data/Random_quotes.json';
 import T from '../data/Random_todo.json';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createAppContainer, createStackNavigator } from 'react-navigation'
 
 export default class RoundButton extends Component{
     constructor(props) {
@@ -67,7 +68,7 @@ export default class RoundButton extends Component{
                     </View>
                 </View>
                 <View style={{flex: 1, flexDirection: 'row', top: 30}}>
-                    <TouchableOpacity style={buttonStyles.button} onPress={() => {/*생성 화면 연결함수*/}}>
+                    <TouchableOpacity style={buttonStyles.button} onPress={() => this.props.navigation.navigate('AddTodoItemScreen', {random: todo})}>
                         <Text style={buttonStyles.title}>ADD TO MY TO-DO LIST</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={buttonStyles.button2} onPress={this.getNew}>

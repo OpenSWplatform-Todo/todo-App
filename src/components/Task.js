@@ -236,6 +236,6 @@ const styles = StyleSheet.create({
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(1, 153, 0, 0.5)',
+      backgroundColor: 'rgba(0, 70, 42, 0.2)',
     },
   });

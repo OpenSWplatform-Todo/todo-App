@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from "@react-navigation/native"
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DrawerContent } from './components/DrawerContent';
+import { DrawerContent } from './components/navigationContents/DrawerContent';
 import { theme } from './theme';
 
 import TodoListScreen from './screens/TodoList';
