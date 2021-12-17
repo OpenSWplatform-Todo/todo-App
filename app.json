@@ -20,7 +20,14 @@
     "ios": {
       "supportsTablet": true
     },
+
     "android": {
+      "package": "com.campustaxi.campustaxi", 
+      "config": { 
+        "googleMaps": { 
+          "apiKey": "AIzaSyBcD6F1sUnJK21UtHt4jLy9SGJ75LAcNoI" 
+          } 
+        },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

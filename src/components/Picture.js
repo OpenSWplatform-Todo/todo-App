@@ -35,7 +35,8 @@ export const GalleryPicker = (props) => {
   return (
     <><View style={viewStyles.container}>
       <Text style={[textStyles.heading, { flexDirection: "row" }]}>Picture</Text>
-    </View><View style={[viewStyles.container, viewStyles.subcontainer]}>
+    </View>
+    <View style={[viewStyles.container, viewStyles.subcontainer]}>
         <Pressable
           style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 30, width: '100%' }]}
           onPress={pickImage}
@@ -47,6 +48,24 @@ export const GalleryPicker = (props) => {
   );
 }
 
+export const Map = ({gotoMap}) => {
+  return(
+    <>
+      <View style={viewStyles.container}>
+        <Text style={[textStyles.heading, { flexDirection: "row" }]}>Location</Text>
+      </View>
+      <View style={[viewStyles.container, viewStyles.subcontainer]}>
+        <Pressable
+          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 30, width: '100%' }]}
+          onPress={gotoMap}
+        >
+          <Image source={images.mark} style={{height: 18, width: 18}}/>
+          <Text style = {textStyles.heading}>  Gallery</Text>
+        </Pressable>
+      </View>
+    </>
+    )
+}
 
 /* 이거 그냥... 말그대로 카메라만 켜짐...ㅋ.ㅋ..ㅋ....
 import React, { useState, useEffect } from 'react';

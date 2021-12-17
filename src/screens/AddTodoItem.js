@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {StatusBar, SafeAreaView, StyleSheet, Text, View, Pressable, TouchableWithoutFeedback, Keyboard, Button} from 'react-native';
 import { AddTask, AddComment } from '../components/Input'
 import { Duedate_time, Category } from '../components/Duedate-time'
-import { GalleryPicker} from '../components/Picture'
+import { GalleryPicker, Map} from '../components/Picture'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -105,7 +105,9 @@ function Addtodo({navigation}){
             
                     <AddComment value = {comment} onChangeText = {commentChangetext}/> 
                     <GalleryPicker picture = {picture} setPicture = {setPicture}/>
-                </View>
+                    <Map gotoMap = {()=>{navigation.navigate('MapScreen')}}/>
+
+                    </View>
             </TouchableWithoutFeedback>
                 
             {/*여기 부터 footer 버튼(reset,submit 버튼) 부분*/}

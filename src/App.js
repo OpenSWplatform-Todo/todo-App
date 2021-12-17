@@ -12,7 +12,10 @@ import RandomScreen from './screens/Random';
 import RandomScreen_result from './screens/Random_result';
 
 import AddTodoItemScreen from './screens/AddTodoItem';
+import MapScreen from './screens/Map'
 import EditTodoItemScreen from './screens/EditTodoItem';
+
+
 
 const Drawer = createDrawerNavigator();
 const TodoListStack = createStackNavigator();
@@ -27,6 +30,7 @@ const TodoListStackScreen = ({navigation}) => (
     > 
         <TodoListStack.Screen name="TodoListScreen" component={TodoListScreen} /> 
         <TodoListStack.Screen name="AddTodoItemScreen" component={AddTodoItemScreen}/> 
+        <TodoListStack.Screen name="MapScreen" component={MapScreen} /> 
         <TodoListStack.Screen name="EditTodoItemScreen" component={EditTodoItemScreen}/> 
     </TodoListStack.Navigator> 
 );
