@@ -8,6 +8,7 @@ import { viewStyles } from '../styles/TodoListScreenStyles';
 
 import SearchBar from './SearchBar';
 
+import SearchBar from '../components/SearchBar';
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
@@ -183,6 +184,30 @@ function TodoList({navigation}) {
       <AddFloatingButton
         onPress={()=>navigation.navigate('AddTodoItemScreen')}
       />
+        title="+"
+        onPress={()=>navigation.navigate('AddTodoItemScreen')}
+      />
+      <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot}
+      />
+      {/* <Text>Search Bar here</Text> */}
+      <SearchBar/>
+        <View style={viewStyles.fixToText}> 
+          <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Select All</Text></Pressable>
+          <Pressable onPress={_deselectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Deselect All</Text></Pressable>
+          <Pressable onPress={_SdeleteTask} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Delete</Text></Pressable>
+          <Pressable onPress={_deleteTaskAll} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Delete All</Text></Pressable>
+        </View>
+        <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
+          <View style={{backgroundColor: 'white'}}>
+          <Filtering/>
+          <DefaultTasks/>
+          </View>
+      </ViewShot>
+      <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
       <ArchiveFloatingButton/>
     </View>
   );
