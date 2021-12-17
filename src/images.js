@@ -1,13 +1,17 @@
-import CheckBoxOutline from '../assets/twotone_check_box_outline_blank_black_24dp.png';
-import CheckBox from '../assets/twotone_check_box_black_24dp.png';
-import DeleteForever from '../assets/twotone_delete_forever_black_24dp.png';
-import Edit from '../assets/twotone_edit_black_24dp.png';
-import More from '../assets/outline_more_vert_black_24dp.png';
+import CheckBox from '../assets/Checked_Checkbox.png'
+import UnCheckBox from '../assets/Unchecked_Checkbox.png'
+import Menu from '../assets/Menu_Vertical.png'
+import right from '../assets/arrow-left.png'
+import left from '../assets/arrow-right.png'
+import gallery from '../assets/gallery.png'
 
 export const images = {
-    uncompleted: CheckBoxOutline,
     completed: CheckBox,
-    delete: DeleteForever,
-    update: Edit,
-    more: More,
+    uncompleted: UnCheckBox,
+    menu: Menu,
+    
+    right: right,
+    left: left,
+
+    gallery: gallery,
 };

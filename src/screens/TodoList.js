@@ -1,14 +1,14 @@
 /*메인화면*/
 import React, {useState, useEffect} from 'react';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { View, Text, Button, ScrollView, Pressable, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, ScrollView, Pressable, FlatList } from 'react-native';
 import { Task } from '../components/Task';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { viewStyles } from '../styles/TodoListScreenStyles';
+import ViewShot from 'react-native-view-shot';
+import * as Sharing from "expo-sharing";
+import { theme } from '../theme';
 
-import SearchBar from './SearchBar';
-
-import SearchBar from '../components/SearchBar';
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
@@ -88,6 +88,10 @@ function TodoList({navigation}) {
 // select task 제거
   const _SdeleteTask = () => {
     const currentTasks = Object.assign({}, taskInfo);
+    if(Object.keys(currentTasks).length == 0 || selectedItems.length == 0){
+      alert("There is no item to delete")
+      return;
+    }
     for(var i = 0; i < selectedItems.length; i++){
       var c = selectedItems[i];
       delete currentTasks[c];
@@ -95,22 +99,31 @@ function TodoList({navigation}) {
     }
     _saveTasks(currentTasks);
   };
+
   
 // 전체 task 제거
   const _deleteTaskAll = id => {
     const currentTasks = Object.assign({}, taskInfo);
+    if(Object.keys(currentTasks).length == 0){
+      alert("There is no item to delete all")
+      return;
+    }
     if (id) {
     for(const id in currentTasks){
         delete currentTasks[id];
     }
+  }
     setSelectedItems([]);
     _saveTasks(currentTasks);
-    }
   };
 
   // 전체 task 선택
   const _selectAllItems = () => {
     const currentTasks = Object.assign({}, taskInfo);
+    if(Object.keys(currentTasks).length == 0){
+      alert("There is no item to select all")
+      return;
+    }
     for (const id in currentTasks) {
       if (!selectedItems.includes(id))
         selectedItems.push(id);
@@ -120,6 +133,11 @@ function TodoList({navigation}) {
 
   // 전체 task 선택 해제
   const _deselectAllItems = () => {
+    const currentTasks = Object.assign({}, taskInfo);
+    if(Object.keys(currentTasks).length == 0 || selectedItems.length == 0){
+      alert("There is no item to deselect all")
+      return;
+    }
     setSelectedItems([]);
   };
   
@@ -137,8 +155,17 @@ function TodoList({navigation}) {
             <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('incompleted')}}><Text>Incompleted</Text></Pressable>
           </View>
         </View>
-  )};
+    )}
 
+  const captureAndShareScreenshot = () => {
+    viewShot.current.capture().then((uri) => {
+    console.log("do something with ", uri);
+    Sharing.shareAsync("file://" + uri);
+    }),
+    (error) => console.error("Oops, snapshot failed", error);
+  };
+  
+  const viewShot = React.useRef();
     
   function DefaultTasks() { /*오늘 이후의 것만 나옴 */
     if(isEmpty === false){
@@ -157,38 +184,18 @@ function TodoList({navigation}) {
               renderItem={({ item }) => (
                 <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
               )}
-              keyExtractor={item => item.id} />
+              keyExtractor={(item, index) => index.toString()} />
         </Pressable>
     )}
     else {return(null)}
-  };
+  }
 
   return (
-    <View style ={ {flex:1} }>
-      <SearchBar/>
+    <View style ={ {flex:1, backgroundColor: 'white'} }>
       <Button
-        title="삭제하기" //select task 제거
-        onPress={_SdeleteTask}/>
-      <Button
-        title="전체 삭제하기" //전체 task 제거
-        onPress={_deleteTaskAll}/>
-      <Button
-        title="전체 선택하기" //전체 task 선택(log로만 확인 가능)
-        onPress={_selectAllItems} />
-      <Button
-        title="전체 해제하기" //전체 task 선택(log로만 확인 가능)
-        onPress={_deselectAllItems} />
-      <Button title="공유" onPress={()=>{}/*shareImage*/} />
-      <Filtering/>
-      <DefaultTasks/>
-      <AddFloatingButton
         title="+"
-        onPress={()=>navigation.navigate('AddTodoItemScreen')}
-      />
-      <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot}
-      />
-      {/* <Text>Search Bar here</Text> */}
-      <SearchBar/>
+        onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
+        <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
         <View style={viewStyles.fixToText}> 
           <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Select All</Text></Pressable>
@@ -211,5 +218,4 @@ function TodoList({navigation}) {
   );
     
 }
- 
   export default TodoList;

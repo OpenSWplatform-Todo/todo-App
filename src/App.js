@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import { NavigationContainer } from "@react-navigation/native"
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -26,7 +25,7 @@ const TodoListStackScreen = ({navigation}) => (
             headerShown: false
         }}
     > 
-        <TodoListStack.Screen name="TodoListScreen" component={TodoListScreen}/>
+        <TodoListStack.Screen name="TodoListScreen" component={TodoListScreen} /> 
         <TodoListStack.Screen name="AddTodoItemScreen" component={AddTodoItemScreen}/> 
         <TodoListStack.Screen name="EditTodoItemScreen" component={EditTodoItemScreen}/> 
     </TodoListStack.Navigator> 
@@ -62,11 +61,13 @@ const App = () => {
                     }
                 }} 
             >
-                <Drawer.Screen name="To-do List" component={TodoListStackScreen}/>
+                <Drawer.Screen name="To-do List" component={TodoListStackScreen} />
                 <Drawer.Screen name="Category" component={CategoryScreen} />
                 <Drawer.Screen name="Report" component={ReportScreen} />
                 <Drawer.Screen name="Random" component={RandomStackScreen} />
             </Drawer.Navigator>
         </NavigationContainer>
     );
-};
+}
+
+export default App;

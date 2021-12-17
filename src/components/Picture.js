@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Image, View, Platform, Pressable, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { textStyles, viewStyle } from '../substyle';
-
+import { textStyles, viewStyles } from '../styles/TodoListScreenStyles';
+import { images } from "../images";
 
 export const GalleryPicker = (props) => {
   const image = props.picture;
@@ -33,14 +33,15 @@ export const GalleryPicker = (props) => {
   };
 
   return (
-    <><View style={viewStyle.container}>
+    <><View style={viewStyles.container}>
       <Text style={[textStyles.heading, { flexDirection: "row" }]}>Picture</Text>
-    </View><View style={[viewStyle.container, viewStyle.subcontainer]}>
+    </View><View style={[viewStyles.container, viewStyles.subcontainer]}>
         <Pressable
-          style={[viewStyle.button, { height: 30, width: '60%' }]}
+          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 30, width: '100%' }]}
           onPress={pickImage}
         >
-        <Text style = {textStyles.heading}>Gallery</Text>
+        <Image source={images.gallery} style={{height: 18, width: 18}}/>
+        <Text style = {textStyles.heading}>  Gallery</Text>
         </Pressable>
       </View></>
   );

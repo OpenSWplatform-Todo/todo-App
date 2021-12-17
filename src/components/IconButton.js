@@ -1,31 +1,38 @@
+/*Task 나열에 사용*/
+
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
-import {images} from '../images';
+import { Pressable, Image, StyleSheet } from 'react-native';
+import { images } from '../images';
 
-const Icon = styled.Image`
-    tint-color: ${({theme}) => theme.icon};
-    width: 30px;
-    height: 30px;
-    margin: 10px;
-`;
+const IconStyle = StyleSheet.create({
+    icon: {
+        width: 30,
+        height: 30,
+        margin: 10,
+    },
+    direction: {
+        width: 10,
+        height: 10,
+    }
+});
+export const IconButton = ({type, onPressOut, id}) => {
+    const _onPressOut = () => {
+        onPressOut(id);
+    }
 
-const IconButton = ({type, onPressOut}) => {
-    return (
-        <TouchableOpacity onPressOut={onPressOut}>
-            <Icon source={type}/>
-        </TouchableOpacity>
-    );
-};
+    return(
+        <Pressable onPressOut={_onPressOut}>
+            <Image source={type} style={IconStyle.icon}/>
+        </Pressable>
+)}
+
+export const IconButton_direct = ({type}) => {
+    return(
+        <Pressable>
+            <Image source={type} style={IconStyle.direction}/>
+        </Pressable>
+)}
 
 IconButton.defaultProps = {
     onPressOut: () => {},
 };
-
-IconButton.propTypes = {
-    type: PropTypes.oneOf(Object.values(images)).isRequired,
-    onPressOut: PropTypes.func,
-};
-
-export default IconButton;
