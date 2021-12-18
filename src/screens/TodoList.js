@@ -12,6 +12,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { ListItem, SearchBar } from "react-native-elements";
 import { Provider, Appbar, Card, Searchbar } from 'react-native-paper';
+import filter from "lodash.filter";
 
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
@@ -208,28 +209,32 @@ const [taskInfo, setTaskInfo] = useState({});
               listview = Object.values(sorted).filter(task => task.completed === false );
             }
             const [loading, setLoading] = useState(false);
-            const [data, setState] = useState(Object.values(listview));
+            const [data, setData] = useState(Object.values(listview));
             const [error, setError] = useState(null);
             const [searchValue, setSearchValue] = useState("");
-            const [arrayholder, setArrayholder] = useState("");
             const [filteredDataSource, setFilteredDataSource] = useState([]);
 
             const searchFunction = (text) => {
-                    const updatedData = Object.values(listview).filter((item) => {
-                    const item_data = `${item.task.toUpperCase()})`;
-                    const text_data = text;
-                    return item_data.indexOf(text_data) > -1;
-                    });
-                    setState(updatedData);
-                    setSearchValue(text);
+                 const updatedData = Object.values(listview).filter((item) => {
+                 const item_data = `${item.task})`;
+                 const text_data = text;
+
+                 setData(updatedData);
+                 setSearchValue(text);
+
+                 return item_data.indexOf(text_data) > -1;
+                 });
+
+
             };
+
             return (
                 <View style={styles.container}>
                 <SearchBar
                    placeholder="Search"
                    lightTheme
                    round
-                   onChangeText={(text) => searchFunction(text)}
+                   onChangeText={text => searchFunction(text)}
                    autoCorrect={false}
                 />
                 <Pressable onPress={deSelectItems}>
