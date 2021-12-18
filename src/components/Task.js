@@ -5,6 +5,7 @@ import { IconButton } from "./IconButton";
 import { ModalButton } from "./ModalBtn";
 import { images } from "../images";
 import { ThemeColors } from "react-navigation";
+import Map from '../screens/Map';
 
 export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, deleteTask, toggleTask, getId}) =>{
 
@@ -38,10 +39,10 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
                     <Text style={styles.btntextStyle}>Picture</Text>
                     </Pressable>
                     <Pressable
-                    style={[styles.button, styles.buttonFunction]}
-                    onPress={() => setModalVisible(!modalVisible)}
+                    style={[styles.button, styles.blackbutton]}
+                    onPress={() => Map}
                     >
-                    <Text style={styles.btntextStyle}>Location</Text>
+                    <Text style={styles.whitebtntextStyle}>Location</Text>
                     </Pressable>
                 </View>
                 </View>
@@ -194,6 +195,11 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 10,
     },
+    blackbutton: {
+       backgroundColor: "black",
+       borderRadius: 10,
+       padding: 10,
+    },
     buttonOpen: {
       backgroundColor: "#E6E6E6",
     },
@@ -218,6 +224,11 @@ const styles = StyleSheet.create({
       color: "black",
       fontSize: 18,
       textAlign: "center"
+    },
+    whitebtntextStyle: {
+          color: "white",
+          fontSize: 18,
+          textAlign: "center"
     },
     modalText: {
       marginBottom: 15,

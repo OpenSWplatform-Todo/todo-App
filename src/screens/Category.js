@@ -5,7 +5,7 @@ import { theme } from '../theme';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import AddFloatingButton from '../components/AddFloatingButton';
+import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import CategoryInputModal from '../components/categoryContents/CategoryInputModal';
 import CategoryItemButton from '../components/categoryContents/CategoryItemButton';
 

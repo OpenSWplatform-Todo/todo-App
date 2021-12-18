@@ -36,6 +36,7 @@ export default class AddFloatingButton extends React.Component {
   gotoArchiveScreen(){
     this.props.navigation.navigate('Report');
   }
+
   
   render() {
     return (
