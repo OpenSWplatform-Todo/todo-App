@@ -1,5 +1,6 @@
 /*항목 생성 screen */
 import React, {useState, useEffect} from 'react';
+import {useIsFocused } from '@react-navigation/native';
 import {StatusBar, SafeAreaView, StyleSheet, Text, View, Pressable, TouchableWithoutFeedback, Keyboard, Button} from 'react-native';
 import { AddTask, AddComment } from '../components/Input'
 import { Duedate_time, Category } from '../components/Duedate-time'
@@ -9,21 +10,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 function Addtodo({route, navigation}){
+    const isFocused = useIsFocused();
     const random = route.params || '';
     const weekday = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
     let today = new Date();
     let date = today.getFullYear()+ "-" + parseInt(today.getMonth()+1)+"-"+today.getDate().toString().padStart(2,'0') +" "+weekday[today.getDay()];
     let time = today.getHours().toString().padStart(2,'0') + ":"+ today.getMinutes().toString().padStart(2,'0');
 
-
+    
     const [task, setTask] = useState(random["random"]||'')/*task 변수*/
     const [duedate, setDuedate] = useState(date) /*duedate 변수*/
     const [duetime, setDuetime] = useState(time) /*duetime 변수*/
-    const [category, setCategory] = useState('.') /*선택한 category 변수*/
+    const [category, setCategory] = useState('') /*선택한 category 변수*/
     const [comment, setComment] = useState('')/*comment 변수 */
-    const [picture, setPicture] = useState('.') /*사진 url*/
-    const [loading, setLoading] = useState(false);
-    
+    const [picture, setPicture] = useState('') /*사진 url*/
+    const [location, setLocation] = useState({})
+
+    const [loading, setLoading] = useState(false)
+
     const getData1 = (data1) => { /*dudate, time 값 자식에게서 가져오기 */
         setDuedate(data1);
     }
@@ -62,6 +66,15 @@ function Addtodo({route, navigation}){
         return () => setLoading(false);
       }, []);
     
+    useEffect(() => {
+    
+        if (isFocused) {
+            setLocation({
+                latitude: route.params?.latitude || 37.55676762137174,
+                longitude: route.params?.longitude || 126.9458908645506,
+            })
+        }
+      }, [isFocused]);
 
     const _saveTasks = async tasks => {
         try{
@@ -84,7 +97,7 @@ function Addtodo({route, navigation}){
     function PressSubmit() {
         const ID = Date.now().toString();
         const newTaskObject = {
-            [ID]: { id: ID, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, completed: false },
+            [ID]: { id: ID, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, latitude:location.latitude, longitude:location.longitude ,completed: false },
         };
         _saveTasks({...tasks, ...newTaskObject});
         setLoading(true);
@@ -106,7 +119,10 @@ function Addtodo({route, navigation}){
             
                     <AddComment value = {comment} onChangeText = {commentChangetext}/> 
                     <GalleryPicker picture = {picture} setPicture = {setPicture}/>
-                    <Map gotoMap = {()=>{navigation.navigate('MapScreen')}}/>
+                    <Map gotoMap = {()=>{navigation.navigate('MapScreen', {
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                    })}}/>
 
                     </View>
             </TouchableWithoutFeedback>

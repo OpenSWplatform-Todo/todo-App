@@ -38,7 +38,7 @@ export const GalleryPicker = (props) => {
     </View>
     <View style={[viewStyles.container, viewStyles.subcontainer]}>
         <Pressable
-          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 30, width: '100%' }]}
+          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 40, width: '100%' }]}
           onPress={pickImage}
         >
         <Image source={images.gallery} style={{height: 18, width: 18}}/>
@@ -56,7 +56,7 @@ export const Map = ({gotoMap}) => {
       </View>
       <View style={[viewStyles.container, viewStyles.subcontainer]}>
         <Pressable
-          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 30, width: '100%' }]}
+          style={[viewStyles.button, {flexDirection: "row", marginLeft: 0, height: 40, width: '100%' }]}
           onPress={gotoMap}
         >
           <Image source={images.mark} style={{height: 18, width: 18}}/>

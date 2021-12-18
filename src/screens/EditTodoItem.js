@@ -1,16 +1,15 @@
-
-
-/*항목 생성 screen */
 import React, {useState, useEffect} from 'react';
+import {useIsFocused } from '@react-navigation/native';
 import {StatusBar, SafeAreaView, StyleSheet, Text, View, Pressable, TouchableWithoutFeedback, Keyboard, Button} from 'react-native';
 import { AddTask, AddComment } from '../components/Input'
-import { Duedate_time } from '../components/Duedate-time'
-import { GalleryPicker} from '../components/Picture'
+import { Duedate_time, Category } from '../components/Duedate-time'
+import { GalleryPicker, Map} from '../components/Picture'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 function Edit({route, navigation}){
+    const isFocused = useIsFocused();
     const itemId = route.params;
     const weekday = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
     let today = new Date();
@@ -20,11 +19,14 @@ function Edit({route, navigation}){
     const [task, setTask] = useState('')/*task 변수*/
     const [duedate, setDuedate] = useState(date) /*duedate 변수*/
     const [duetime, setDuetime] = useState(time) /*duetime 변수*/
-    const [category, setCategory] = useState('.') /*선택한 category 변수*/
+    const [category, setCategory] = useState('') /*선택한 category 변수*/
     const [comment, setComment] = useState('')/*comment 변수 */
-    const [picture, setPicture] = useState('.') /*사진 url*/
-    const [loading, setLoading] = useState(false);
+    const [picture, setPicture] = useState('') /*사진 url*/
+    const [location, setLocation] = useState({})
     
+    const [loading, setLoading] = useState(false)
+    const [done, setDone] = useState(false)
+
     const getData1 = (data1) => { /*dudate, time 값 자식에게서 가져오기 */
         setDuedate(data1);
     }
@@ -41,7 +43,7 @@ function Edit({route, navigation}){
         setComment(text);
     }
 
-
+    const [categories, setCategories] = useState({})
     const [tasks, setTasks] = useState({}) /*최종으로 넘길 값*/
     
     let currentTasks = Object.assign({}, tasks);
@@ -59,14 +61,24 @@ function Edit({route, navigation}){
             setComment(currentTasks[ID]['comment'])
             setCategory(currentTasks[ID]['category'])
             setPicture(currentTasks[ID]['picture'])
+            setLocation({latitude: currentTasks[ID]['latitude'], longitude: currentTasks[ID]['longitude']})
             } catch (err) {
             console.log(err);
           }
         };
         firstLoad();
-        return () => setLoading(false);
+        return () => {setLoading(false); setDone(true)}
       }, []);
+
+      useEffect(() => {
     
+        if (isFocused && done === true) {
+            setLocation({
+                latitude: route.params?.latitude || currentTasks[ID]['latitude'],
+                longitude: route.params?.longitude || currentTasks[ID]['longitude'],
+            })
+        }
+      }, [isFocused]);
 
     const _saveTasks = async tasks => {
         try{
@@ -81,7 +93,7 @@ function Edit({route, navigation}){
         delete currentTasks[ID]
 
         const newTaskObject = {
-            [ID]: { id: ID, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, completed: false },
+            [ID]: { id: ID, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, latitude:location.latitude, longitude:location.longitude ,completed: false },
         };
         _saveTasks({...currentTasks, ...newTaskObject});
         navigation.navigate('TodoListScreen');
@@ -99,10 +111,14 @@ function Edit({route, navigation}){
                     
                     <Duedate_time data1={duedate} data2={duetime} getData1={getData1} getData2={getData2}/>
 
-                    {/*<Category/> */}
+                    <Category data = {category} getData = {setCategory}/>
             
                     <AddComment value = {comment} onChangeText = {commentChangetext}/> 
                     <GalleryPicker picture = {picture} setPicture = {setPicture}/>
+                    <Map gotoMap = {()=>{navigation.navigate('MapScreen', {
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                    })}}/>
                 </View>
             </TouchableWithoutFeedback>
                 
@@ -114,7 +130,9 @@ function Edit({route, navigation}){
                     setDuetime(currentTasks[ID]['duetime'])
                     setComment(currentTasks[ID]['comment'])
                     setCategory(currentTasks[ID]['category'])
-                    setPicture(currentTasks[ID]['picture'])}}/>
+                    setPicture(currentTasks[ID]['picture'])
+                    setLocation({latitude: currentTasks[ID]['latitude'], longitude: currentTasks[ID]['longitude']})
+                    }}/>
                 <ExportButton onPressout = {PressSubmit}/>
             </View>
 
