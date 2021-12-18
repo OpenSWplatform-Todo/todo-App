@@ -154,18 +154,17 @@ const [taskInfo, setTaskInfo] = useState({});
     setSelectedItems([]);
   };
 
-    {/* SORT */}
-  const _sortByAddedDate = () => {
-    if (true){
-        return;
-    }
+  {/* SORT */}
+  const _sortByDueDate = () => {
+
   ;}
 
-  const _sortByDueDate = () => {
-      if (true){
-          return;
-      }
-   ;}
+// sort하기 이전으로 돌아감
+  const _sortByAddedDate = () => {
+
+  ;}
+
+
   
   const dragChange = (dragList) => {
     setTaskInfo(dragList);
@@ -221,7 +220,7 @@ const [taskInfo, setTaskInfo] = useState({});
                     return item_data.indexOf(text_data) > -1;
                     });
                     setState(updatedData);
-                    setSearchValue(text);
+                    setSearchValue([...text]);
             };
             return (
                 <View style={styles.container}>
@@ -292,9 +291,9 @@ const [taskInfo, setTaskInfo] = useState({});
         </View>
         {/* SORT BY DATE */}
         <View style={viewStyles.fixToText}>
-          <Pressable onPress={_sortByAddedDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
-          <Text>Sort by Due Date</Text></Pressable>
           <Pressable onPress={_sortByDueDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Sort by Due Date</Text></Pressable>
+          <Pressable onPress={_sortByAddedDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Sort by Added Date</Text></Pressable>
         </View>
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
