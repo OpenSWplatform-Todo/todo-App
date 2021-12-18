@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776a05d5-9187-4e52-b245-bb51f654bc41" name="Default Changelist" comment="" />
+    <list default="true" id="e27454a7-f48c-454d-8fe3-b806b160b4d5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/screens/TodoList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TodoList.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +17,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="22RfxCM5E3qZoHF7KarGYItVCkc" />
+  <component name="ProjectId" id="22SfZszxa8S6bdXlonZuRMgJyFi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,5 +52,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+      <changelist id="e27454a7-f48c-454d-8fe3-b806b160b4d5" name="Default Changelist" comment="" />
+      <created>1639835972410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1639835972410</updated>
+    </task>
+    <servers />
   </component>
 </project>
