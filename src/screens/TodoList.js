@@ -22,6 +22,7 @@ function TodoList({navigation}) {
   const [taskview, setTaskview] = useState('all')
   const isFocused = useIsFocused();
   const [taskid, setTaskid] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getId = (id) =>{
     setTaskid(id);
@@ -40,10 +41,14 @@ function TodoList({navigation}) {
             if(!loadedTasks){setIsEmpty(true)}
             else{setIsEmpty(false)}
         }
-          firstLoad();
+      firstLoad();
     }
   }, [isFocused]);
       
+  useEffect(()=>{
+    return () => setLoading(false);
+  },[]);
+
   const _saveTasks = async tasks => {
       try{
           await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
@@ -144,6 +149,15 @@ function TodoList({navigation}) {
     setSelectedItems([]);
   };
   
+<<<<<<< HEAD
+=======
+  const dragChange = (dragList) => {
+    setTaskInfo(dragList);
+    _saveTasks(dragList);
+    setLoading(true);
+  }
+
+>>>>>>> main
   function Filtering() {
     return(
       <View style={{margintop: 5,marginLeft:5, marginRight:5, width: '95%', height: 50, alignItems: 'center', flexDirection: "row"}}>
