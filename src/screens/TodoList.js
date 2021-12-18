@@ -309,7 +309,7 @@ const [taskInfo, setTaskInfo] = useState({});
           </View>
         </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
-      <ArchiveFloatingButton/>
+      <ArchiveFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
     </View>
   );
     
