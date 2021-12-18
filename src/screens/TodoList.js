@@ -153,6 +153,19 @@ const [taskInfo, setTaskInfo] = useState({});
     }
     setSelectedItems([]);
   };
+
+    {/* SORT */}
+  const _sortByAddedDate = () => {
+    if (true){
+        return;
+    }
+  ;}
+
+  const _sortByDueDate = () => {
+      if (true){
+          return;
+      }
+   ;}
   
   const dragChange = (dragList) => {
     setTaskInfo(dragList);
@@ -277,13 +290,20 @@ const [taskInfo, setTaskInfo] = useState({});
           <Pressable onPress={_deleteTaskAll} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Delete All</Text></Pressable>
         </View>
+        {/* SORT BY DATE */}
+        <View style={viewStyles.fixToText}>
+          <Pressable onPress={_sortByAddedDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Sort by Due Date</Text></Pressable>
+          <Pressable onPress={_sortByDueDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Sort by Added Date</Text></Pressable>
+        </View>
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
           <View style={{backgroundColor: 'white'}}>
           <Filtering/>
           <SearchTasks/>
-          <DefaultTasks/>
+          {/*<DefaultTasks/>*/}
           </View>
-      </ViewShot>
+        </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
       <ArchiveFloatingButton/>
     </View>
