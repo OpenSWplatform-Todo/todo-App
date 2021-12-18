@@ -149,15 +149,12 @@ function TodoList({navigation}) {
     setSelectedItems([]);
   };
   
-<<<<<<< HEAD
-=======
   const dragChange = (dragList) => {
     setTaskInfo(dragList);
     _saveTasks(dragList);
     setLoading(true);
   }
 
->>>>>>> main
   function Filtering() {
     return(
       <View style={{margintop: 5,marginLeft:5, marginRight:5, width: '95%', height: 50, alignItems: 'center', flexDirection: "row"}}>
@@ -262,7 +259,7 @@ function TodoList({navigation}) {
     <View style ={ {flex:1, backgroundColor: 'white'} }>
       <Button
         title="+"
-        onPress={()=>navigation.navigate('AddTodoItemScreen')
+        onPress={()=>navigation.navigate('AddTodoItemScreen')}
       />
       <Button 
         color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot}
