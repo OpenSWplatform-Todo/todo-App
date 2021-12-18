@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     blackbutton: {
-       backgroundColor: "black",
+       backgroundColor: "#00462A",
        borderRadius: 10,
        padding: 10,
     },
