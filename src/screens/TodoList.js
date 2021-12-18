@@ -215,6 +215,7 @@ const [taskInfo, setTaskInfo] = useState({});
             const [filteredDataSource, setFilteredDataSource] = useState([]);
 
             const searchFunction = (text) => {
+
                  const updatedData = Object.values(listview).filter((item) => {
                  const item_data = `${item.task})`;
                  const text_data = text;
@@ -224,9 +225,8 @@ const [taskInfo, setTaskInfo] = useState({});
 
                  return item_data.indexOf(text_data) > -1;
                  });
-
-
             };
+
 
             return (
                 <View style={styles.container}>
