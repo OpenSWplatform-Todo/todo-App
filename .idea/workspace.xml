@@ -46,4 +46,7 @@
       </map>
     </option>
   </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
 </project>
