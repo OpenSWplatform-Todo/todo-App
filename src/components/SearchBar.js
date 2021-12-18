@@ -1,8 +1,10 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component, PureComponent, useState } from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableHightLight, View, FlatList } from 'react-native';
-import { ListItem, SearchBar } from "react-native-elements";
 import filter from "lodash.filter";
-import { Provider, Appbar, Card, Searchbar } from 'react-native-paper';
+
+import { Task } from './Task';
+import {_deleteTask, _toggleTask, _editTask} from '../screens/TodoList';
+
 
 const DATA = [
   {
@@ -28,8 +30,14 @@ const Item = ({ title }) => {
 };
 
 const renderItem = ({ item }) => <Item title={item.task} />;
+const getSelected = id => selectedItems.includes(id.id);
+
+const getId = (id) =>{
+    setTaskid(id);
+  }
 
 class Search extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -63,7 +71,16 @@ class Search extends Component {
         />
         <FlatList
           data={this.state.data}
-          renderItem={renderItem}
+          renderItem={({ item }) => (
+            <Task key=
+            {item.id} item={item}
+            deleteTask={_deleteTask}
+            toggleTask={_toggleTask}
+            Edit={_editTask}
+            onPress={() => handleOnPress(item)}
+            getId={getId}
+            />
+          )}
           keyExtractor={(item) => item.task}
         />
       </View>

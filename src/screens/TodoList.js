@@ -1,5 +1,5 @@
 /*메인화면*/
-import React, {useState, useEffect} from 'react';
+import React, { Component, PureComponent, useState, useEffect} from 'react';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { StyleSheet, View, Text, Button, ScrollView, Pressable, FlatList } from 'react-native';
 import { Task } from '../components/Task';
@@ -9,7 +9,9 @@ import ViewShot from 'react-native-view-shot';
 import * as Sharing from "expo-sharing";
 import { theme } from '../theme';
 
-import SearchBar from '../components/SearchBar';
+import { ListItem, SearchBar } from "react-native-elements";
+import { Provider, Appbar, Card, Searchbar } from 'react-native-paper';
+
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
@@ -167,6 +169,57 @@ function TodoList({navigation}) {
   };
   
   const viewShot = React.useRef();
+
+  function SearchTasks(){
+
+    if(isEmpty === false){
+          let listview = sorted
+          if(taskview === 'completed'){
+            listview = Object.values(sorted).filter(task => task.completed === true );
+          }
+          else if(taskview === 'incompleted'){
+            listview = Object.values(sorted).filter(task => task.completed === false );
+          }
+
+          const [loading, setLoading] = useState(false);
+          const [data, setState] = useState(Object.values(listview));
+          const [error, setError] = useState(null);
+          const [searchValue, setSearchValue] = useState("");
+          const [arrayholder, setArrayholder] = useState("");
+
+
+          const searchFunction = (text) => {
+                  const updatedData = Object.values(listview).filter((item) => {
+                  const item_data = `${item.task.toUpperCase()})`;
+                  const text_data = text;
+                  return item_data.indexOf(text_data) > -1;
+                  });
+                  setState(updatedData);
+                  setSearchValue(text);
+          };
+
+          return (
+              <View style={styles.container}>
+              <SearchBar
+                 placeholder="Search"
+                 lightTheme
+                 round
+                 onChangeText={(text) => searchFunction(text)}
+                 autoCorrect={false}
+              />
+              <Pressable onPress={deSelectItems}>
+                <FlatList
+                    data={Object.values(listview)}
+                    renderItem={({ item }) => (
+                      <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+              </Pressable>
+              </View>
+        )
+    } else {return(null)}
+  };
     
   function DefaultTasks() { /*오늘 이후의 것만 나옴 */
     if(isEmpty === false){
@@ -212,8 +265,8 @@ function TodoList({navigation}) {
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
           <View style={{backgroundColor: 'white'}}>
           <Filtering/>
-          <SearchBar/>
-          <DefaultTasks/>
+          <SearchTasks/>
+          {/*<DefaultTasks/>*/}
           </View>
         </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
@@ -222,4 +275,30 @@ function TodoList({navigation}) {
   );
     
 }
-  export default TodoList;
+
+export default TodoList;
+
+const styles = StyleSheet.create({
+    container: {
+    },
+    item: {
+      backgroundColor: "#EBEBEB",
+      padding: 20,
+      marginVertical: 4,
+    },
+});
+
+const DATA = [
+  {
+    id: "1",
+    task: "Data Structures",
+  },
+  {
+    id: "2",
+    task: "STL",
+  },
+  {
+    id: "3",
+    task: "C++",
+  },
+];
