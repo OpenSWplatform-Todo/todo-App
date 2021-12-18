@@ -187,7 +187,6 @@ function TodoList({navigation}) {
           const [searchValue, setSearchValue] = useState("");
           const [arrayholder, setArrayholder] = useState("");
 
-
           const searchFunction = (text) => {
                   const updatedData = Object.values(listview).filter((item) => {
                   const item_data = `${item.task.toUpperCase()})`;
@@ -287,18 +286,3 @@ const styles = StyleSheet.create({
       marginVertical: 4,
     },
 });
-
-const DATA = [
-  {
-    id: "1",
-    task: "Data Structures",
-  },
-  {
-    id: "2",
-    task: "STL",
-  },
-  {
-    id: "3",
-    task: "C++",
-  },
-];
