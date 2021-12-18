@@ -28,10 +28,9 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
                 onPress={() => setModalVisible(!modalVisible)}>
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Title</Text>
-                    <Text style={styles.modalsubText}>Date</Text>
-                    <Text style={styles.modalsubText}>Category</Text>
-                    <Text style={styles.modalsubText}>Assignment Due</Text>
+                    <Text style={styles.modalText}>{item.task}</Text>
+                    <Text style={styles.modalsubText}>{item.duedate}  {item.duetime}</Text>
+                    <Text style={styles.modalsubText}>Category: {item.category}</Text>
                     <Pressable
                     style={[styles.button, styles.buttonFunction]}
                     onPress={() => setModalVisible(!modalVisible)}

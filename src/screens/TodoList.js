@@ -220,12 +220,15 @@ const [taskInfo, setTaskInfo] = useState({});
                    autoCorrect={false}
                 />
                 <Pressable onPress={deSelectItems}>
-                  <FlatList
-                      data={Object.values(listview)}
-                      renderItem={({ item }) => (
-                        <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
-                      )}
-                      keyExtractor={(item, index) => index.toString()}
+                  <DraggableFlatList
+                                data = {Object.values(listview)}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item, index, drag}) => (
+                                  <Task key={item.id} item={item} index = {index}
+                                  drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask}
+                                  onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+                                )}
+                                onDragEnd={({ data }) => dragChange(data)}
                   />
                 </Pressable>
                 </View>
