@@ -17,8 +17,7 @@ function Addtodo({route, navigation}){
     let date = today.getFullYear()+ "-" + parseInt(today.getMonth()+1)+"-"+today.getDate().toString().padStart(2,'0') +" "+weekday[today.getDay()];
     let time = today.getHours().toString().padStart(2,'0') + ":"+ today.getMinutes().toString().padStart(2,'0');
 
-    
-    const [task, setTask] = useState(random["random"]||'')/*task 변수*/
+    const [task, setTask] = useState(random['random']||'')/*task 변수*/
     const [duedate, setDuedate] = useState(date) /*duedate 변수*/
     const [duetime, setDuetime] = useState(time) /*duetime 변수*/
     const [category, setCategory] = useState('') /*선택한 category 변수*/

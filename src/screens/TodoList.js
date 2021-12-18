@@ -8,17 +8,18 @@ import { viewStyles } from '../styles/TodoListScreenStyles';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from "expo-sharing";
 import { theme } from '../theme';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
 function TodoList({navigation}) {
-
-  const [taskInfo, setTaskInfo] = useState({});
+const [taskInfo, setTaskInfo] = useState({});
   const [isEmpty, setIsEmpty] = useState(true);
   const [taskview, setTaskview] = useState('all')
   const isFocused = useIsFocused();
   const [taskid, setTaskid] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getId = (id) =>{
     setTaskid(id);
@@ -26,7 +27,7 @@ function TodoList({navigation}) {
 
   let todate = new Date();
   today = todate.getFullYear()+ "-" + parseInt(todate.getMonth()+1)+"-"+todate.getDate().toString().padStart(2,'0')
-  let sorted = Object.values(taskInfo).filter(task => task.duedate.slice(0,-4) >= today );/*오늘 이후의 item만 여기에 있음.*/
+  let sorted = Object.values(taskInfo).filter(task => task.duedate.slice(0,-4) >= today);/*오늘 이후의 item만 여기에 있음.*/
 
   useEffect(() => {
     
@@ -37,10 +38,14 @@ function TodoList({navigation}) {
             if(!loadedTasks){setIsEmpty(true)}
             else{setIsEmpty(false)}
         }
-          firstLoad();
+      firstLoad();
     }
   }, [isFocused]);
       
+  useEffect(()=>{
+    return () => setLoading(false);
+  },[]);
+
   const _saveTasks = async tasks => {
       try{
           await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
@@ -52,7 +57,9 @@ function TodoList({navigation}) {
   
   const _toggleTask = id => {
     const currentTasks = Object.assign({},taskInfo);
-    currentTasks[id] ['completed'] = !currentTasks[id]['completed'];
+    for (const C_id in currentTasks)
+      if (currentTasks[C_id].id == id)
+        currentTasks[C_id] ['completed'] = !currentTasks[C_id]['completed'];
     setTaskInfo(currentTasks);
     _saveTasks(currentTasks);
   }
@@ -64,7 +71,9 @@ function TodoList({navigation}) {
   const _deleteTask = () => {
     id = taskid
     const currentTasks = Object.assign({}, taskInfo);
-    delete currentTasks[id];
+    for (const C_id in currentTasks)
+        if (currentTasks[C_id].id == id)
+          delete currentTasks[C_id];
     _saveTasks(currentTasks);
   };
 
@@ -94,12 +103,13 @@ function TodoList({navigation}) {
     }
     for(var i = 0; i < selectedItems.length; i++){
       var c = selectedItems[i];
-      delete currentTasks[c];
+      for (const id in currentTasks)
+        if (currentTasks[id].id == c)
+          delete currentTasks[id];
       setSelectedItems([]);
     }
     _saveTasks(currentTasks);
   };
-
   
 // 전체 task 제거
   const _deleteTaskAll = id => {
@@ -125,8 +135,8 @@ function TodoList({navigation}) {
       return;
     }
     for (const id in currentTasks) {
-      if (!selectedItems.includes(id))
-        selectedItems.push(id);
+      if (!selectedItems.includes([id].id))
+        selectedItems.push(currentTasks[id].id);
     }
     setSelectedItems([...selectedItems]);
   };
@@ -141,6 +151,12 @@ function TodoList({navigation}) {
     setSelectedItems([]);
   };
   
+  const dragChange = (dragList) => {
+    setTaskInfo(dragList);
+    _saveTasks(dragList);
+    setLoading(true);
+  }
+
   function Filtering() {
     return(
       <View style={{margintop: 5,marginLeft:5, marginRight:5, width: '95%', height: 50, alignItems: 'center', flexDirection: "row"}}>
@@ -164,9 +180,9 @@ function TodoList({navigation}) {
     }),
     (error) => console.error("Oops, snapshot failed", error);
   };
-  
+
   const viewShot = React.useRef();
-    
+
   function DefaultTasks() { /*오늘 이후의 것만 나옴 */
     if(isEmpty === false){
       let listview = sorted
@@ -178,17 +194,22 @@ function TodoList({navigation}) {
       }
       
       return (
-        <Pressable onPress={deSelectItems}>
-            <FlatList
-              data={Object.values(listview)}
-              renderItem={({ item }) => (
-                <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+        <Pressable onPress={deSelectItems} >
+            <DraggableFlatList
+              data = {Object.values(listview)}
+              keyExtractor={(item, index) => index.toString()} 
+              renderItem={({ item, index, drag}) => (
+                <Task key={item.id} item={item} index = {index} 
+                drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} 
+                onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
               )}
-              keyExtractor={(item, index) => index.toString()} />
+              onDragEnd={({ data }) => dragChange(data)}
+              />
         </Pressable>
     )}
     else {return(null)}
   }
+
 
   return (
     <View style ={ {flex:1, backgroundColor: 'white'} }>

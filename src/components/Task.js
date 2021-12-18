@@ -6,12 +6,10 @@ import { ModalButton } from "./ModalBtn";
 import { images } from "../images";
 import { ThemeColors } from "react-navigation";
 
-export const Task = ({Edit, item, selected, onPress, onLongPress, deleteTask, toggleTask, getId}) =>{
+export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, deleteTask, toggleTask, getId}) =>{
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisible2, setModalVisible2] = useState(false);
-    
-    
 
     return (
         <View style={styles.centeredView}>
@@ -91,9 +89,12 @@ export const Task = ({Edit, item, selected, onPress, onLongPress, deleteTask, to
           </Modal>
             <TouchableOpacity
                 style={[styles.icon, styles.buttonOpen]}
-                id = {item.id} onPress={onPress} onLongPress={onLongPress} onPress={() => {setModalVisible(true)}}
+                id = {item.id} index = {item.index} onLongPress={onLongPress} onPress={onPress} onPress={() => {setModalVisible(true)}}
             >
                 <View style = {itemStyle.container}>
+                    <Pressable onLongPress={drag} style={[styles.icon, styles.buttonOpen, {paddingLeft:10,}]}>
+                      <Image source={images.order} style={{ height:20, width:20}} />
+                    </Pressable>
                     <IconButton style = {[{flex: 1}]} type = {item.completed ? images.completed : images.uncompleted} 
                     id = {item.id} onPressOut={toggleTask}/>
                     <View style = {[itemStyle.contents, {flex: 5}]}>
@@ -101,7 +102,6 @@ export const Task = ({Edit, item, selected, onPress, onLongPress, deleteTask, to
                             {color: (item.completed) ? '#595959':'#00462A'},
                             {textDecorationLine: (item.completed ? 'line-through':'none')}]}>{item.task}
                         </Text>
-                        
                         <View style = {{flexDirection: 'row'}}>
                             <Text style = {itemStyle.datefont}>{item.duedate}</Text>
                             <Text style = {itemStyle.datefont}>  {item.duetime}</Text>
