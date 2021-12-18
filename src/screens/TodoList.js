@@ -43,6 +43,7 @@ const [taskInfo, setTaskInfo] = useState({});
             else{setIsEmpty(false)}
         }
       firstLoad();
+      console.log(taskInfo)
     }
   }, [isFocused]);
       

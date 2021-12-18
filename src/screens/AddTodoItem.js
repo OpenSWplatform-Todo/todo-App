@@ -25,7 +25,10 @@ function Addtodo({route, navigation}){
     const [category, setCategory] = useState('') /*선택한 category 변수*/
     const [comment, setComment] = useState('')/*comment 변수 */
     const [picture, setPicture] = useState('') /*사진 url*/
-    const [location, setLocation] = useState({})
+    const [location, setLocation] = useState({
+        latitude: 37.55676762137174,
+        longitude: 126.9458908645506,
+    })
 
     const [loading, setLoading] = useState(false)
     
@@ -64,17 +67,13 @@ function Addtodo({route, navigation}){
             }
         };
         firstLoad();
+        if (isFocused) {
+            setLocation({
+                latitude: route.params?.latitude || 37.55676762137174,
+                longitude: route.params?.longitude || 126.9458908645506,
+            })
+        }
         return () => setLoading(false);
-    }, []);
-
-    useEffect(() => {
-
-    if (isFocused) {
-        setLocation({
-            latitude: route.params?.latitude || 37.55676762137174,
-            longitude: route.params?.longitude || 126.9458908645506,
-        })
-    }
     }, [isFocused]);
 
 

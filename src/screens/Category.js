@@ -1,11 +1,11 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, List, ScrollView, StyleSheet, View, Text, Modal, TextInput, Button, FlatList, TouchableOpacity, Pressable, Dimensions } from 'react-native';
+import { AntDesign } from "@expo/vector-icons";
 import { theme } from '../theme';
 
-import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
+import AddFloatingButton from '../components/AddFloatingButton';
 import CategoryInputModal from '../components/categoryContents/CategoryInputModal';
 import CategoryItemButton from '../components/categoryContents/CategoryItemButton';
 
@@ -31,22 +31,61 @@ export default function Category(){
     await AsyncStorage.setItem('categoryList', JSON.stringify(updatedCategoryList));
   }
 
-const Category = () => {
   return (
-    <View style = { styles.container }>
-      <Text>Category Screen</Text>
-      <AddFloatingButton />
+    <View style={styles.container}>
+      <View style={styles.flatlistcontainer}>
+        <FlatList 
+          data={categoryList} 
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between', margin: 35, marginTop: 15, marginBottom: 15}}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => <CategoryItemButton item={item}/>}
+        />
+        {!categoryList.length ? (
+          <View>
+            <Text>Add Categories</Text>
+          </View>
+        ) : null}
+      </View>
+
+      <AddFloatingButton 
+        onPress={()=>setModalVisible(true)}
+      />
+
+      <CategoryInputModal 
+        visible={modalVisible} 
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleOnSubmit}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: theme.white,
-    alignItems: "center",
-    justifyContent: "center",
+    alignContent:'center', 
+    justifyContent: 'center'
+  },
+  flatlistcontainer: {
+    flex:1,
+    backgroundColor: theme.white,
+    alignContent:'center', 
+    justifyContent: 'center',
+  },
+  item: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: 'pink',
+    fontSize: 24,
+  },
+  content: {
+    padding: 40,
+  },
+  list: {
+    marginTop: 20,
   }
 });
-
-export default Category;

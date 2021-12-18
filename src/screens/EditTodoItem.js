@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 function Edit({route, navigation}){
     const isFocused = useIsFocused();
     const itemId = route.params;
+    
     const weekday = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
     let today = new Date();
     let date = today.getFullYear()+ "-" + parseInt(today.getMonth()+1)+"-"+today.getDate().toString().padStart(2,'0') +" "+weekday[today.getDay()];
@@ -50,7 +51,7 @@ function Edit({route, navigation}){
     const [tasks, setTasks] = useState({}) /*최종으로 넘길 값*/
     
     let currentTasks = Object.assign({}, tasks);
-    const ID = itemId.itemId;
+    let ID = itemId.itemId;
 
     useEffect(() => {
         const firstLoad = async () => {
@@ -58,6 +59,9 @@ function Edit({route, navigation}){
             const loadedTasks = await AsyncStorage.getItem('tasks');
             setTasks(JSON.parse(loadedTasks || '{}'));
             currentTasks = (JSON.parse(loadedTasks || '{}'));
+            for (const C_id in currentTasks)
+                if (currentTasks[C_id].id == ID)
+                    ID = C_id
             setTask(currentTasks[ID]['task'])
             setDuedate(currentTasks[ID]['duedate'])
             setDuetime(currentTasks[ID]['duetime'])
@@ -78,10 +82,9 @@ function Edit({route, navigation}){
         if (isFocused && done === true) {
             setLocation({
                 latitude: route.params?.latitude || currentTasks[ID]['latitude'],
-                longitude: route.pararms?.longitude || currentTasks[ID]['longitude'],
+                longitude: route.params?.longitude || currentTasks[ID]['longitude'],
             })
         }
-        
     }, [isFocused]);
 
     const _saveTasks = async tasks => {
@@ -94,10 +97,12 @@ function Edit({route, navigation}){
     };
     
     function PressSubmit() {
+        for (const C_id in currentTasks)
+                if (currentTasks[C_id].id == ID)
+                    ID = C_id
         delete currentTasks[ID]
-
         const newTaskObject = {
-            [ID]: { id: ID, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, latitude:location.latitude, longitude:location.longitude ,completed: false },
+            [ID]: { id: itemId.itemId, task: task, duedate: duedate, duetime: duetime, category: category, comment: comment, picture: picture, latitude:location.latitude, longitude:location.longitude ,completed: false },
         };
         _saveTasks({...currentTasks, ...newTaskObject});
         navigation.navigate('TodoListScreen');

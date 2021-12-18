@@ -47,9 +47,10 @@ export default function Map({navigation, route}) {
         <View style = {styles.footer}>
           <ConfirmButton onPressout={()=>{navigation.navigate({
             name: screen,
-            params: {latitude: location.latitude, longitude: location.longitude,},
+            params: {latitude: location.latitude, longitude: location.longitude},
             merge: true,
-          })}}/>
+          })
+          }}/>
         </View>
       </>
     );
