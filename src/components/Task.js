@@ -57,7 +57,7 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
               Alert.alert("Modal has been closed.");
               setModalVisible2(!modalVisible2);
             }}
-          >
+            >
             <TouchableWithoutFeedback
               onPress={() => {
                 setModalVisible2(!modalVisible2)
@@ -86,7 +86,7 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          </Modal>
+            </Modal>
             <TouchableOpacity
                 style={[styles.icon, styles.buttonOpen]}
                 id = {item.id} index = {item.index} onLongPress={onLongPress} onPress={onPress} onPress={() => {setModalVisible(true)}}
@@ -119,7 +119,8 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
                       <Image source={images.menu} style={IconStyle.icon}/>
                     </Pressable>
               </View>
-                {selected && <View style={styles.overlay} />}
+              </View>
+                {/*{selected && <View style={styles.overlay} />}*/}
             </TouchableOpacity>
         </View>
     );
