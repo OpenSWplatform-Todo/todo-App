@@ -212,6 +212,7 @@ const [taskInfo, setTaskInfo] = useState({});
             const [error, setError] = useState(null);
             const [searchValue, setSearchValue] = useState("");
             const [arrayholder, setArrayholder] = useState("");
+            const [filteredDataSource, setFilteredDataSource] = useState([]);
 
             const searchFunction = (text) => {
                     const updatedData = Object.values(listview).filter((item) => {
@@ -220,7 +221,7 @@ const [taskInfo, setTaskInfo] = useState({});
                     return item_data.indexOf(text_data) > -1;
                     });
                     setState(updatedData);
-                    setSearchValue([...text]);
+                    setSearchValue(text);
             };
             return (
                 <View style={styles.container}>
@@ -233,14 +234,14 @@ const [taskInfo, setTaskInfo] = useState({});
                 />
                 <Pressable onPress={deSelectItems}>
                   <DraggableFlatList
-                                data = {Object.values(listview)}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({ item, index, drag}) => (
-                                  <Task key={item.id} item={item} index = {index}
-                                  drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask}
-                                  onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
-                                )}
-                                onDragEnd={({ data }) => dragChange(data)}
+                     data = {Object.values(listview)}
+                     keyExtractor={(item, index) => index.toString()}
+                     renderItem={({ item, index, drag}) => (
+                        <Task key={item.id} item={item} index = {index}
+                        drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask}
+                        onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+                     )}
+                     onDragEnd={({ data }) => dragChange(data)}
                   />
                 </Pressable>
                 </View>
