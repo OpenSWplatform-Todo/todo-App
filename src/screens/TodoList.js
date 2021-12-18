@@ -227,7 +227,6 @@ const [taskInfo, setTaskInfo] = useState({});
                  });
             };
 
-
             return (
                 <View style={styles.container}>
                 <SearchBar
