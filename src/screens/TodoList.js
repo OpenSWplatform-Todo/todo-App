@@ -8,6 +8,7 @@ import { viewStyles } from '../styles/TodoListScreenStyles';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from "expo-sharing";
 import { theme } from '../theme';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 
 import { ListItem, SearchBar } from "react-native-elements";
 import { Provider, Appbar, Card, Searchbar } from 'react-native-paper';
@@ -243,13 +244,16 @@ function TodoList({navigation}) {
       
       return (
           <Pressable onPress={deSelectItems}>
-            <FlatList
+            <DraggableFlatList
                 data={Object.values(listview)}
-                renderItem={({ item }) => (
-                  <Task key={item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
-                )}
-                keyExtractor={(item, index) => index.toString()} 
-            />
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index, drag}) => (
+                <Task key={item.id} item={item} index = {index}
+                drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask}
+                onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+              )}
+              onDragEnd={({ data }) => dragChange(data)}
+              />
           </Pressable>
     )}
     else {return(null)}
@@ -278,7 +282,7 @@ function TodoList({navigation}) {
           <View style={{backgroundColor: 'white'}}>
           <Filtering/>
           <SearchTasks/>
-          {/*<DefaultTasks/>*/}
+          <DefaultTasks/>
           </View>
         </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
