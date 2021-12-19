@@ -41,14 +41,9 @@ export default function Category(){
           data={categoryList} 
           numColumns={2}
           columnWrapperStyle={{ justifyContent: 'space-between', margin: 35, marginTop: 15, marginBottom: 15}}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id ? item.id.toString() : ""}
           renderItem={({item}) => <CategoryItemButton item={item}/>}
         />
-        {!categoryList.length ? (
-          <View>
-            <Text>Add Categories</Text>
-          </View>
-        ) : null}
       </View>
 
       <AddFloatingButton 
