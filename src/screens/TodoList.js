@@ -151,6 +151,16 @@ function TodoList({navigation}) {
     }
     setSelectedItems([]);
   };
+
+
+// SORT
+  const _sortDueDate = (setSortedItems) => {
+      const currentTasks = Object.assign({}, taskInfo);
+  };
+
+  const _sortAddedDate = () => {
+
+  };
   
   const dragChange = (dragList) => {
     setTaskInfo(dragList);
@@ -173,6 +183,7 @@ function TodoList({navigation}) {
           </View>
         </View>
     )}
+
 
   const captureAndShareScreenshot = () => {
     viewShot.current.capture().then((uri) => {
@@ -223,7 +234,7 @@ function TodoList({navigation}) {
   return (
     <View style ={ {flex:1, backgroundColor: 'white'} }>
         <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
-        <View style={viewStyles.fixToText}> 
+        <View style={viewStyles.fixToText}>
           <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Select All</Text></Pressable>
           <Pressable onPress={_deselectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
@@ -232,6 +243,13 @@ function TodoList({navigation}) {
           <Text>Delete</Text></Pressable>
           <Pressable onPress={_deleteTaskAll} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
           <Text>Delete All</Text></Pressable>
+        </View>
+        {/* SORT */}
+        <View style={viewStyles.fixToText}>
+          <Pressable onPress={_sortDueDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Sort by Due Date</Text></Pressable>
+          <Pressable onPress={_sortAddedDate} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
+          <Text>Sort by Added Date</Text></Pressable>
         </View>
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
           <View style={{backgroundColor: 'white'}}>

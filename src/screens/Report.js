@@ -1,23 +1,37 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ProgressBar, Colors} from "react-native-paper";
 import { StyleSheet, View, Text } from 'react-native';
 
 import { theme } from '../theme';
 
-const Report = () => {
+function Report() {
+
+const isFocused = useIsFocused();
+const [taskInfo, setTaskInfo] = useState({});
+
+  useEffect(() => {
+    if (isFocused) {
+        const _loadTasks = async () => {
+            const loadedTasks = await AsyncStorage.getItem('tasks');
+            setTaskInfo(JSON.parse(loadedTasks || '{}'));
+        }
+      _loadTasks();
+    }
+  }, [isFocused]);
+
+  const totalTask = Object.keys(taskInfo).length;
+  const completeTask = Object.values(taskInfo).filter(task => task.completed === true).length;
+  const percentTask = Math.floor((completeTask*100)/(totalTask));
+
   return (
-    <View style = { styles.container }>
-      <Text>Report Screen</Text>
+    <View>
+      <Text>completeTask: {percentTask}%</Text>
+      {/*<ProgressBar
+               progress={percentTask/100} color={Colors.green900} width={300}
+      />*/}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.white,
-    alignItems: "center",
-    justifyContent: "center",
-  }
-});
-
 export default Report;

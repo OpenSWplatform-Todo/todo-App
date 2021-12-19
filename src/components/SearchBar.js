@@ -1,24 +1,31 @@
-import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import React, { Component, useState } from "react";
+import {StyleSheet, Text, View, FlatList } from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import filter from "lodash.filter";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 import {DefaultTasks} from '../screens/TodoList';
 
 const DATA = [
 {
 	id: "1",
-	task: "aaaa",
+	task: "Java Programming",
 },
 {
 	id: "2",
-	task: "bbbb",
+	task: "Go for a walk",
 },
 {
 	id: "3",
-	task: "cccc",
+	task: "Zoom Meeting",
 },
 ];
+
+const firstLoad = async () => {
+   const loadedTasks = await AsyncStorage.getItem('tasks');
+   setTaskInfo(JSON.parse(loadedTasks || '{}'));
+};
 
 const Item = ({ task }) => {
 return (
@@ -29,7 +36,9 @@ return (
 };
 
 const renderItem = ({ item }) => <Item task={item.task} />;
+
 class Search extends Component {
+
 constructor(props) {
 	super(props);
 	this.state = {
@@ -39,7 +48,7 @@ constructor(props) {
         searchValue: "",
 	};
 	this.arrayholder = DATA;
-}
+};
 
 searchFunction = (text) => {
     if (text) {
@@ -50,6 +59,7 @@ searchFunction = (text) => {
     	});
     	this.setState({ data: updatedData, searchValue: text });
     } else {
+        // text 비어 있을 경우 item 숨김
         const updatedData = this.arrayholder.filter((item) => {
         const item_data = `${item.task.toUpperCase()})`;
         const text_data = text.toUpperCase();
@@ -88,12 +98,12 @@ container: {
     marginBottom: 0,
 },
 item: {
-	backgroundColor: "black",
+	backgroundColor: "white",
 	padding: 10,
 	marginVertical: 4,
 },
 itemtxt: {
-    color: "white",
+    color: "#00462A",
     fontSize: 20,
 },
 });
