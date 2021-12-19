@@ -168,6 +168,29 @@ function TodoList({navigation}) {
     setLoading(true);
   }
 
+<<<<<<< Updated upstream
+=======
+  const searchTodo = (text) =>{
+    if(text === '' ){
+      setTaskInfo(taskInfo)
+      setSearch(text)
+    } else{
+      const filteredItems = Object.values(taskInfo).filter((item)=>{
+        if(item.task.toLowerCase().includes(text.toLowerCase())){
+            return item
+        }
+      })
+        setTaskInfo(filteredItems);
+        setSearch(text);
+    }
+  };
+
+  const DefaultTodo = (text) => {
+        setTaskInfo(taskInfo);
+        setSearch(text);
+  };
+
+>>>>>>> Stashed changes
   function Filtering() {
     return(
       <View style={{margintop: 5,marginLeft:5, marginRight:5, width: '95%', height: 50, alignItems: 'center', flexDirection: "row"}}>
@@ -233,6 +256,17 @@ function TodoList({navigation}) {
 
   return (
     <View style ={ {flex:1, backgroundColor: 'white'} }>
+<<<<<<< Updated upstream
+=======
+      <SearchBar
+          lightTheme
+          searchIcon={{ size: 24 }}
+          onChangeText={(text) => searchTodo(text)}
+          onClear={(text) => DefaultTodo(text)}
+          placeholder="Search Todo item..."
+          value={search}
+        />
+>>>>>>> Stashed changes
         <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
         <View style={viewStyles.fixToText}>
           <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
