@@ -5,6 +5,10 @@ import filter from "lodash.filter";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import {DefaultTasks} from '../screens/TodoList';
 
 const DATA = [
