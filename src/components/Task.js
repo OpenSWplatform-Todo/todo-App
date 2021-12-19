@@ -6,11 +6,18 @@ import { ModalButton } from "./ModalBtn";
 import { images } from "../images";
 import { ThemeColors } from "react-navigation";
 
-export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, deleteTask, toggleTask, getId}) =>{
+export const Task = ({gotoMap, Edit, item, index, drag, image, selected, onPress,  onLongPress, deleteTask, toggleTask, getId}) =>{
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalVisible2, setModalVisible2] = useState(false);
 
+    function _isPicture(){
+      if(item.picture){
+        return(<Image source={{ uri: item.picture }} style={{ width: 300, height: 200 , marginBottom: 10}} />)
+      }
+      else
+        return null
+    }
     return (
         <View style={styles.centeredView}>
             {/* POPUP */}
@@ -28,19 +35,22 @@ export const Task = ({Edit, item, index, drag, selected, onPress,  onLongPress, 
                 onPress={() => setModalVisible(!modalVisible)}>
                 <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Title</Text>
-                    <Text style={styles.modalsubText}>Date</Text>
-                    <Text style={styles.modalsubText}>Category</Text>
-                    <Text style={styles.modalsubText}>Assignment Due</Text>
+                    <Text style={styles.modalText}>{item.task}</Text>
+                    <Text style={styles.modalsubText}>{item.duedate}  {item.duetime}</Text>
+                    <Text style={styles.modalsubText}>Category: {item.category}</Text>
+                    <Text style={styles.btntextStyle}>Comment: {item.comment} </Text>
                     <Pressable
                     style={[styles.button, styles.buttonFunction]}
                     onPress={() => setModalVisible(!modalVisible)}
                     >
                     <Text style={styles.btntextStyle}>Picture</Text>
                     </Pressable>
+                    
+                    <_isPicture/>
+              
                     <Pressable
                     style={[styles.button, styles.blackbutton]}
-                    onPress={() => Map}
+                    onPress={gotoMap}
                     >
                     <Text style={styles.whitebtntextStyle}>Location</Text>
                     </Pressable>

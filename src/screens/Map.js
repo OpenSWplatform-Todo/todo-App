@@ -16,6 +16,25 @@ export default function Map({navigation, route}) {
       longitude: longitude,
     });
 
+    const _isButton = () => {
+      if(screen !== 'onlyView'){
+        return(
+        <View style = {styles.footer}>
+          <ConfirmButton text = 'confirm' onPressout={()=>{navigation.navigate({
+            name: screen,
+            params: {latitude: location.latitude, longitude: location.longitude},
+            merge: true,
+          })}}/>
+        </View>)
+        }
+      else if (screen === 'onlyView'){
+        return(
+          <View style = {styles.footer}>
+            <ConfirmButton text = 'goBack' onPressout={()=>{navigation.goBack()}}/>
+          </View>)
+      }
+    }
+    
 
     return (
       <>
@@ -44,24 +63,17 @@ export default function Map({navigation, route}) {
           <Text>{location.latitude}, {location.longitude}</Text>
         </MapView>
 
-        <View style = {styles.footer}>
-          <ConfirmButton onPressout={()=>{navigation.navigate({
-            name: screen,
-            params: {latitude: location.latitude, longitude: location.longitude},
-            merge: true,
-          })
-          }}/>
-        </View>
+        <_isButton/>
       </>
     );
   }
 
-  const ConfirmButton = ({onPressout}) => {
+  const ConfirmButton = ({onPressout, text}) => {
     return(
         <Pressable 
             style = {[{ backgroundColor: '#00462A' }, footer.pressable]}
             onPressOut = {onPressout}>
-            <Text style = {footer.text}> confirm </Text>
+            <Text style = {footer.text}> {text} </Text>
         </Pressable>
     );
   }

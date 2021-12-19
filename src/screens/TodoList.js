@@ -1,25 +1,29 @@
 /*메인화면*/
 import React, {useState, useEffect} from 'react';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button, ScrollView, Pressable, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Button, ScrollView, Pressable, FlatList } from 'react-native';
 import { Task } from '../components/Task';
+import Search from '../components/SearchBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { viewStyles } from '../styles/TodoListScreenStyles';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from "expo-sharing";
 import { theme } from '../theme';
 import DraggableFlatList from 'react-native-draggable-flatlist';
+import { SearchBar } from 'react-native-elements';
 
 import AddFloatingButton from '../components/floatingButtons/AddFloatingButton';
 import ArchiveFloatingButton from '../components/floatingButtons/ArchiveFloatingButton';
 
 function TodoList({navigation}) {
-const [taskInfo, setTaskInfo] = useState({});
+  const [taskInfo, setTaskInfo] = useState({});
+  const [search, setSearch] = useState('');
   const [isEmpty, setIsEmpty] = useState(true);
   const [taskview, setTaskview] = useState('all')
   const isFocused = useIsFocused();
   const [taskid, setTaskid] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isArchive, setIsArchive] = useState(false);
 
   const getId = (id) =>{
     setTaskid(id);
@@ -30,7 +34,7 @@ const [taskInfo, setTaskInfo] = useState({});
   let sorted = Object.values(taskInfo).filter(task => task.duedate.slice(0,-4) >= today);/*오늘 이후의 item만 여기에 있음.*/
 
   useEffect(() => {
-    
+    console.log(taskInfo)
     if (isFocused) {
         const firstLoad = async () => {
             const loadedTasks = await AsyncStorage.getItem('tasks');
@@ -153,9 +157,24 @@ const [taskInfo, setTaskInfo] = useState({});
   
   const dragChange = (dragList) => {
     setTaskInfo(dragList);
-    _saveTasks(dragList);
+    _saveTasks(dragList);s
     setLoading(true);
   }
+
+  const searchTodo = (text) =>{
+    if(text == '' ){
+      setTaskInfo(taskInfo)
+      setSearch(text)
+    } else{
+      const filteredItems = Object.values(taskInfo).filter((item)=>{
+        if(item.task.toLowerCase().includes(text.toLowerCase())){
+            return item
+        }
+    })
+    setTaskInfo(filteredItems);
+    setSearch(text); 
+    }
+};
 
   function Filtering() {
     return(
@@ -167,8 +186,8 @@ const [taskInfo, setTaskInfo] = useState({});
           </View>
           <View style={{width: '50%', justifyContent: 'center', alignItems: 'flex-end', flexDirection: "row" }}>
             <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('all')}}><Text style = {{fontWeight: (taskview === 'all') ? 'bold':'normal'}}>All</Text></Pressable>
-            <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('completed')}}><Text style = {{fontWeight: (taskview === 'completed') ? 'bold':'normal'}}>Completed</Text></Pressable>
-            <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('incompleted')}}><Text style = {{fontWeight: (taskview === 'incompleted') ? 'bold':'normal'}}>Incompleted</Text></Pressable>
+            <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('completed')}}><Text style = {{fontWeight: (taskview === 'completed') ? 'bold':'normal'}}>Complete</Text></Pressable>
+            <Pressable style = {{margin: 10}} onPress={()=>{setTaskview('incompleted')}}><Text style = {{fontWeight: (taskview === 'incompleted') ? 'bold':'normal'}}>Incomplete</Text></Pressable>
           </View>
         </View>
     )}
@@ -180,19 +199,27 @@ const [taskInfo, setTaskInfo] = useState({});
     }),
     (error) => console.error("Oops, snapshot failed", error);
   };
+  const gotoMap = item => {navigation.navigate('MapScreen', {
+    latitude: item.latitude,
+    longitude: item.longitude,
+    screen: 'onlyView'
+  })}
+  
 
   const viewShot = React.useRef();
 
   function DefaultTasks() { /*오늘 이후의 것만 나옴 */
     if(isEmpty === false){
-      let listview = sorted
+      let listview
+      const currentTasks = Object.assign({}, taskInfo);
+      isArchive ? (listview = currentTasks) : (listview = sorted)
       if(taskview === 'completed'){
         listview = Object.values(sorted).filter(task => task.completed === true );
       }
       else if(taskview === 'incompleted'){
         listview = Object.values(sorted).filter(task => task.completed === false );
-      }
-      
+      }    
+
       return (
         <Pressable onPress={deSelectItems} >
             <DraggableFlatList
@@ -201,7 +228,8 @@ const [taskInfo, setTaskInfo] = useState({});
               renderItem={({ item, index, drag}) => (
                 <Task key={item.id} item={item} index = {index} 
                 drag={drag} deleteTask={_deleteTask} toggleTask={_toggleTask} Edit={_editTask} 
-                onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId} />
+                onPress={() => handleOnPress(item)} onLongPress={() => selectItems(item)} selected={getSelected(item)} getId={getId}  
+                gotoMap = {()=>gotoMap(item)} />
               )}
               onDragEnd={({ data }) => dragChange(data)}
               />
@@ -210,9 +238,16 @@ const [taskInfo, setTaskInfo] = useState({});
     else {return(null)}
   }
 
-
   return (
     <View style ={ {flex:1, backgroundColor: 'white'} }>
+      <SearchBar
+          lightTheme
+          searchIcon={{ size: 24 }}
+          onChangeText={(text) => searchTodo(text)}
+          onClear={(text) => searchTodo('')}
+          placeholder="Search Todo item..."
+          value={search}
+        />
         <Button color = "#00462A" title="Share My Todo List" onPress={captureAndShareScreenshot} />
         <View style={viewStyles.fixToText}> 
           <Pressable onPress={_selectAllItems} style={({ pressed }) => [{backgroundColor: pressed ? 'rgba(0, 70, 42, 0.2)' : 'white'}, viewStyles.wrapperCustom]}>
@@ -227,13 +262,20 @@ const [taskInfo, setTaskInfo] = useState({});
         <ViewShot ref = {viewShot} options={{ format: "jpg", quality: 0.9 }}>
           <View style={{backgroundColor: 'white'}}>
           <Filtering/>
+          {/*<Search/>*/}
           <DefaultTasks/>
           </View>
       </ViewShot>
       <AddFloatingButton onPress={()=>navigation.navigate('AddTodoItemScreen')}/>
-      <ArchiveFloatingButton/>
+      <ArchiveFloatingButton onPress = {() => {setIsArchive(!isArchive); console.log(isArchive)}}/>
     </View>
   );
-    
-}
+};
+
+const styles = StyleSheet.create({
+  itemStyle: {
+    padding: 10,
+  },
+});
+  
   export default TodoList;

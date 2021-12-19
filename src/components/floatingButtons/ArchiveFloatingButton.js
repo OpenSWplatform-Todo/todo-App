@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { viewStyles, buttonStyles } from '../../styles/FloatingButtonStyles';
 import { theme } from '../../theme';
 
-export default class AddFloatingButton extends React.Component {
+export default class ArchiveFloatingButton extends React.Component {
   state={
     backgroundColor: theme.white,
     borderWidth: 3,
@@ -48,7 +48,7 @@ export default class AddFloatingButton extends React.Component {
               borderColor: this.state.borderColor,
             }]
           }
-          onPress={() => [this.changeColor(), /*this.gotoArchive()*/]}
+          onPress={this.props.onPress/*() => [this.changeColor()]*/ }
         >
           <Animated.View>  
             <AntDesign name="inbox" size={28} color={this.state.iconColor} />
